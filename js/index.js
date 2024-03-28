@@ -12,6 +12,11 @@
         document.querySelector('.introduction-text').textContent = productData.introductionText.en;
         document.querySelector('.description').textContent = productData.description.en;
 
-        document.querySelector('.price-currency-value').textContent = `£${productData.price.current.GBP}`;
+        document.querySelector('.price-currency-value.regular').textContent = `£${productData.price.regular.GBP}`;
+
+        if (productData.price.regular.GBP !== productData.price.specialOffer.GBP) {
+            document.querySelector('.price-currency-value.regular').classList.add('struck');
+            document.querySelector('.price-currency-value.offer').textContent = `£${productData.price.specialOffer.GBP}`;
+        }
     });
 }());
