@@ -3,6 +3,7 @@
     const PRODUCT_ID = 210556947;
     getProductData(PRODUCT_ID).then(productData => {
         document.querySelector('h1').textContent = productData.name.en;
+        setQuantityStep(productData.quantityInfo.divisibleBy);
 
         const imageElement = document.querySelector('.main-image');
         imageElement.setAttribute('alt', productData.name.en);

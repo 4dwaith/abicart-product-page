@@ -1,4 +1,5 @@
 const cartCountChannel = new BroadcastChannel("cartCount");
+let quantityStep = 1;
 
 function getCurrentCartCount() {
     let currentCartCount = localStorage.getItem('cartCount');
@@ -15,16 +16,20 @@ function setCurrentCartCount(count) {
     cartCountChannel.postMessage(count);
 }
 
+function setQuantityStep(stepCount) {
+    quantityStep = stepCount;
+}
+
 function incrementCartCount() {
     const cartCount = getCurrentCartCount();
-    const newCount = cartCount + 1;
+    const newCount = cartCount + quantityStep;
     setCurrentCartCount(newCount);
     return newCount;
 }
 
 function decrementCartCount() {
     const cartCount = getCurrentCartCount();
-    const newCount = cartCount - 1;
+    const newCount = cartCount - quantityStep;
     setCurrentCartCount(newCount);
     return newCount;
 }
