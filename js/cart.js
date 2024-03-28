@@ -1,3 +1,5 @@
+const cartCountChannel = new BroadcastChannel("cartCount");
+
 function getCurrentCartCount() {
     let currentCartCount = localStorage.getItem('cartCount');
 
@@ -10,9 +12,7 @@ function getCurrentCartCount() {
 
 function setCurrentCartCount(count) {
     localStorage.setItem('cartCount', count);
-
-    // Set the count for the header
-    document.querySelector('.shopping-cart .item-count').textContent = count;
+    cartCountChannel.postMessage(count);
 }
 
 function incrementCartCount() {
@@ -76,4 +76,19 @@ function decrementCartCount() {
     addToCartButton.addEventListener('click', handleCartIncrement);
     productQuantityIncrement.addEventListener('click', handleCartIncrement);
     productQuantityDecrement.addEventListener('click', handleCartDecrement);
+
+    cartCountChannel.onmessage = (event) => {
+
+        const cartCount = Number(event.data);
+
+        productQuantity.value = cartCount;
+        headerCartQuantity.textContent = cartCount;
+
+        if (cartCount === 0) {
+            addToCartButton.classList.remove('hidden');
+            proceedToCheckoutButton.classList.add('hidden');
+            cartCounter.classList.add('hidden');
+        }
+
+    }
 }());
